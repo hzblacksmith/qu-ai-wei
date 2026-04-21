@@ -1,0 +1,46 @@
+name: 💡 Pattern Suggestion / 建议新模式
+description: 建议增加或修改 AI 腔检测模式
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        看到一种新的 AI 腔，或者觉得现有规则需要调整？写下来！
+
+  - type: textarea
+    id: pattern
+    attributes:
+      label: 模式描述
+      description: 这种 AI 腔是什么样的？有什么关键词或结构？
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: 原文示例
+      description: 举一个或几个典型例子
+    validations:
+      required: true
+
+  - type: textarea
+    id: rewrite
+    attributes:
+      label: 改写方向
+      description: 你觉得应该怎么改？
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 所属大类（选最接近的）
+      options:
+        - A. 内容模式
+        - B. 语言模式
+        - C. 修辞模式
+        - D. 交流模式
+        - E. 填充与模糊
+        - F. 翻译腔
+        - G. 篇章模式
+        - H. 平台腔
+        - I. 幻觉与伪造
+        - 新类别

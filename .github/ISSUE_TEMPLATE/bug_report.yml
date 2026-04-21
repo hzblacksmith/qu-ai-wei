@@ -1,0 +1,50 @@
+name: 🐛 Bug Report
+description: 技能检测错误或改写有问题
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        发现问题？谢谢你！填一下下面几项，能让修复快很多。
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: 问题类型
+      options:
+        - 漏检（该识别的没识别）
+        - 误判（不该识别的识别了）
+        - 改写有问题（识别对了但改坏了）
+        - 其他
+    validations:
+      required: true
+
+  - type: input
+    id: pattern
+    attributes:
+      label: 触发的模式编号（如知道的话）
+      description: 比如 #7 AI高频词、#21 四字成语堆叠
+      placeholder: "#7"
+
+  - type: textarea
+    id: input
+    attributes:
+      label: 原文（触发问题的输入）
+      description: 粘贴让技能产出问题的那段文字
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 技能实际给出了什么
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+      description: 你觉得应该识别为什么 / 改成什么
+    validations:
+      required: true
