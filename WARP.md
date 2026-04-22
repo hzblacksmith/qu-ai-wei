@@ -1,31 +1,13 @@
----
-name: qu-ai-wei
-version: 0.5.5
-description: |
-  去除简体中文文本中的 AI 写作痕迹,让文字读起来更自然、更像人写的。
-  当用户说「去 AI 味 / 去ai味 / 帮我去 AI 味 / 改得说人话 / 写得更通俗 / 去掉 AI
-  腔 / 让文字更像人写的 / 润色一下让它不那么像 AI / humanize 中文 / 改写这段中文
-  让它更自然」等类似请求时,应主动触发本 skill。也可通过 `/qu-ai-wei` 显式调用。
-  检测并修复以下模式:过度拔高意义(值得一提的是、具有重要意义)、时代背景开场套路
-  (随着...的不断发展)、华丽意象词堆砌(璀璨、熠熠生辉、赋能)、四字成语机械堆叠、
-  客服式助手腔(希望对您有帮助)、的的不休、滥用进行+V、性/化 后缀堆叠、翻译腔残留、
-  自媒体伪深度/伪疗愈腔、毒性正能量缝合、B 站科普 AI 体操、
-  第二人称泛化代词("用户 / 大家"替代"你")
-  等共 51 类模式,分 9 个大类(A-I),带 9 种语体识别前置步骤(含品牌广告 / 文案语体
-  与技术博客分档),外加顶层硬约束:过度消毒反制 + AI 不敢写正向检测 + 事实发明禁令
-  + 门检强制输出 + 语体降级保护,避免过度改写与虚构事实。参照 Apple 大中华区 /
-  Nike 大中华区本地化文案作为品牌广告语体的反向诊断基准。
-  注:首次公开版本只支持简体中文。繁體(台 / 港用字)规则单独维护,暂未纳入。
-license: MIT
-compatibility: claude-code opencode cursor windsurf
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Grep
-  - Glob
-  - AskUserQuestion
----
+# qu-ai-wei · 去 AI 味 (Warp rules)
+
+> 这是 qu-ai-wei skill 的 Warp 兼容版本,与 Claude Code / OpenCode / Cursor / Windsurf 版本的 `SKILL.md` 内容一致,仅去掉了 YAML frontmatter。
+>
+> **在 Warp 中使用：** 把本文件放到项目根目录并命名为 `WARP.md`(已是此名),Warp 会自动作为仓库级系统指令加载给其 AI agent。全局生效可放 `~/.warp/WARP.md`。
+>
+> 之后用户说「帮我去 AI 味 / 改得说人话 / 写得更通俗 / humanize 这段中文」等,Warp 的 agent 就会按本规则清理中文 AI 腔。
+>
+> ⚠️ **版本 0.5.5 开发版,只支持简体中文。** 繁體版本留给后续迭代。
+
 
 # 去 AI 味(qu-ai-wei):去除中文 AI 写作痕迹
 
