@@ -111,6 +111,25 @@ cp ~/qu-ai-wei/WARP.md ~/.warp/WARP.md
 
 把 [`SKILL.md`](./SKILL.md) 的正文直接粘到模型的自定义指令或系统提示里，跳过顶部 `---` 包起来的 YAML frontmatter 那段。
 
+## 升级
+
+装好后想拿到最新规则：
+
+```bash
+# Claude Code / OpenCode:一行搞定
+bash ~/.claude/skills/qu-ai-wei/update.sh
+
+# 等价的手工做法
+cd ~/.claude/skills/qu-ai-wei && git pull
+
+# Cursor / Windsurf / Warp:在 clone 出来的那份上 pull,再覆盖回项目
+cd ~/qu-ai-wei && git pull
+cp ~/qu-ai-wei/.cursorrules /path/to/your-project/.cursorrules
+cp ~/qu-ai-wei/WARP.md      /path/to/your-project/WARP.md
+```
+
+`update.sh` 会打印 `旧版本 → 新版本` 和本版发布页链接,没有新版就提示「已是最新」。每版具体变化见 [Releases](https://github.com/hzblacksmith/qu-ai-wei/releases)。
+
 ## 用法
 
 ### 自然语言触发（推荐）
