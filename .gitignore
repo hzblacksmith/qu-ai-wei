@@ -1,0 +1,51 @@
+# Claude Code / IDE state — never commit, every machine has its own
+.claude/
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# API keys / secrets — scripts read from env vars (~/.api-keys.env etc.)
+# If you need a local override, put it in .env.local (gitignored below).
+.env
+.env.*
+!.env.example
+api-keys.env
+*.key
+*.pem
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs and temp
+*.log
+*.tmp
+tmp/
+temp/
+
+# Integration test pipeline is kept local (API scripts, sample data, eval runs).
+# It's valuable for future skill iteration but not part of the public release surface.
+# Public repo keeps only README / LICENSE / SKILL.md / .cursorrules / WARP.md.
+tests/
+
+# OS
+.Trashes
+ehthumbs.db
