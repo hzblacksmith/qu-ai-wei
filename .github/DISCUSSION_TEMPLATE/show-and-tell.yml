@@ -1,0 +1,72 @@
+title: "[样本] "
+labels: ["sample"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **贴一份你跑过 qu-ai-wei 的原文 + 终稿**,帮作者看它在真实世界里跑得怎么样 —— 哪些规则命中、哪些漏判、哪些过度修正。
+        后续版本会拿这些样本做 regression。
+
+        不想贴原文全文?只贴你关心的那几句就够了。贴之前**请自行脱敏**(删掉人名、公司名、内部信息)。
+
+  - type: textarea
+    id: original
+    attributes:
+      label: 原文
+      description: 粘贴让 qu-ai-wei 改写的那段文字(或关键段落)
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: qu-ai-wei 给的终稿
+      description: v0.6.0 起连「打磨报告」一起贴最好,能帮作者看上下文
+    validations:
+      required: true
+
+  - type: dropdown
+    id: verdict
+    attributes:
+      label: 你觉得改得怎么样
+      options:
+        - 改得不错 —— 该删的删了,该留的留了
+        - 改得可以 —— 但漏了一些明显的 AI 腔
+        - 改过头了 —— 该留的毛边被删了
+        - 改坏了 —— 改出了原文没有的内容
+        - 其他(底下文字说)
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 具体说说
+      description: 如果上面选了"漏了 / 改过头 / 改坏",指给作者看是哪句哪处
+      placeholder: "例如:倒数第三段的「确诊为 xx」被改成了「被认为是 xx」,这是 2025 鲜活词,本不该改"
+
+  - type: input
+    id: platform
+    attributes:
+      label: 在哪个平台跑的
+      placeholder: "Claude Code / Cursor / Windsurf / Warp / ChatGPT / Kimi / 其他"
+
+  - type: input
+    id: genre
+    attributes:
+      label: 原文的语体(可选)
+      placeholder: "朋友圈 / 公众号 / 产品文案 / 工作邮件 / PRD / 特稿 ..."
+
+  - type: input
+    id: version
+    attributes:
+      label: 跑的是哪个版本(可选)
+      placeholder: "v0.6.0"
+
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 使用许可
+      options:
+        - label: "我同意把这份样本用于 qu-ai-wei 的 regression 测试和规则改进。"
+          required: true
