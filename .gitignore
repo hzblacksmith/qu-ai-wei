@@ -41,10 +41,16 @@ yarn-error.log*
 tmp/
 temp/
 
-# Integration test pipeline is kept local (API scripts, sample data, eval runs).
-# It's valuable for future skill iteration but not part of the public release surface.
-# Public repo keeps only README / LICENSE / SKILL.md / .cursorrules / WARP.md.
-tests/
+# tests/ 的公开子目录:
+#   tests/fixtures/  — 3 条回归用的 AI 腔样本(公开,是 v0.6.2 "行为不变" 的证据)
+#   tests/baseline/  — 结构重构前(v0.6.1 SKILL.md)对 fixtures 的输出(公开)
+#   tests/after/     — 结构重构后(v0.6.2 lean SKILL.md + references)的输出(公开)
+#
+# tests/ 的本地子目录(不公开):
+#   tests/integration-run/ — 调 API 跑回归的脚本和中间产物,涉及密钥和大量样本
+#   tests/local/           — 本地试验、临时文件
+tests/integration-run/
+tests/local/
 
 # OS
 .Trashes
