@@ -5,11 +5,11 @@
 [![Language](https://img.shields.io/badge/lang-简体中文-red.svg)](#)
 [![GitHub stars](https://img.shields.io/github/stars/hzblacksmith/qu-ai-wei?style=social)](https://github.com/hzblacksmith/qu-ai-wei/stargazers)
 
-> ⚠️ **0.5 开发版:** qu-ai-wei 仍在迭代，规则、分类、API 都可能变动。欢迎提 [issue](https://github.com/hzblacksmith/qu-ai-wei/issues) / [discussion](https://github.com/hzblacksmith/qu-ai-wei/discussions) / PR 反馈。
+> ⚠️ **0.x 开发版（当前 v0.6.3）:** qu-ai-wei 仍在迭代，规则、分类、API 都可能变动。欢迎提 [issue](https://github.com/hzblacksmith/qu-ai-wei/issues) / [discussion](https://github.com/hzblacksmith/qu-ai-wei/discussions) / PR 反馈。
 >
 > **只支持简体中文。** 繁體有自己的 AI 腔特征、用字偏好、排版规范，规则需要单独维护，留给后续版本。
 
-扫掉简体中文里 AI 写作的痕迹，让稿子读着像人写的。Claude Code、OpenCode、Cursor、Windsurf、Warp 这几个平台都能跑。
+扫掉简体中文里 AI 写作的痕迹，让稿子读着像人写的。当前原生支持 8 个 agent：Cursor、Claude Code、OpenAI Codex CLI、OpenCode、Kiro、Factory Droid、Slate、Hermes。
 
 ---
 
@@ -61,34 +61,40 @@ v0.6.0 起,这个 skill 同时扮演两个角色:
 
 ## 安装
 
-### 一键安装到 skills 目录（推荐）
+### 支持的 agents（同一种安装方式）
+
+| Agent | 参数 | 默认安装目录 |
+|---|---|---|
+| Cursor | `--platform cursor` | `~/.cursor/skills/qu-ai-wei` |
+| Claude Code | `--platform claude` | `~/.claude/skills/qu-ai-wei` |
+| OpenAI Codex CLI | `--platform codex` | `~/.codex/skills/qu-ai-wei` |
+| OpenCode | `--platform opencode` | `~/.config/opencode/skills/qu-ai-wei` |
+| Kiro | `--platform kiro` | `~/.kiro/skills/qu-ai-wei` |
+| Factory Droid | `--platform factory` | `~/.factory/skills/qu-ai-wei` |
+| Slate | `--platform slate` | `~/.slate/skills/qu-ai-wei` |
+| Hermes | `--platform hermes` | `~/.hermes/skills/qu-ai-wei` |
+
+以上 8 个 agent 安装方式完全一致，统一用一个脚本。
+
+### 一键安装（推荐）
 
 ```bash
 git clone https://github.com/hzblacksmith/qu-ai-wei.git ~/qu-ai-wei
 cd ~/qu-ai-wei
 
 # 按平台安装（可重复执行）
-bash scripts/install-skill.sh --platform codex
 bash scripts/install-skill.sh --platform cursor
+bash scripts/install-skill.sh --platform claude
+bash scripts/install-skill.sh --platform codex
+bash scripts/install-skill.sh --platform opencode
+bash scripts/install-skill.sh --platform kiro
 bash scripts/install-skill.sh --platform factory
 bash scripts/install-skill.sh --platform slate
-bash scripts/install-skill.sh --platform kiro
 bash scripts/install-skill.sh --platform hermes
 
 # 一次装全
 bash scripts/install-skill.sh --platform all
 ```
-
-默认会安装到 `<skills-root>/qu-ai-wei`（不是固定某个词前缀）。对应平台目录：
-
-| 平台 | 参数 | 目标目录 |
-|---|---|---|
-| OpenAI Codex CLI | `--platform codex` | `~/.codex/skills/qu-ai-wei` |
-| Cursor | `--platform cursor` | `~/.cursor/skills/qu-ai-wei` |
-| Factory Droid | `--platform factory` | `~/.factory/skills/qu-ai-wei` |
-| Slate | `--platform slate` | `~/.slate/skills/qu-ai-wei` |
-| Kiro | `--platform kiro` | `~/.kiro/skills/qu-ai-wei` |
-| Hermes | `--platform hermes` | `~/.hermes/skills/qu-ai-wei` |
 
 可选参数：
 
@@ -105,24 +111,6 @@ bash scripts/install-skill.sh --platform codex --name qu-ai-wei-cn
 
 # 自定义平台目录
 bash scripts/install-skill.sh --to ~/.my-agent/skills --name qu-ai-wei
-```
-
-### Claude Code / OpenCode（兼容原方式）
-
-也可以直接放在 `~/.claude/skills/qu-ai-wei/`（OpenCode 会扫描这个目录）。
-
-### Cursor / Windsurf / Warp（文件级兼容方式）
-
-如果你的环境更偏好项目级规则文件，继续使用下面方式：
-
-```bash
-# Cursor / Windsurf
-cp ~/qu-ai-wei/.cursorrules /path/to/your-project/.cursorrules
-cp ~/qu-ai-wei/.cursorrules /path/to/your-project/.windsurfrules
-
-# Warp
-cp ~/qu-ai-wei/WARP.md /path/to/your-project/WARP.md
-cp ~/qu-ai-wei/WARP.md ~/.warp/WARP.md
 ```
 
 ### 其他支持自定义指令的模型（ChatGPT / DeepSeek / Kimi / 通义 等）
@@ -142,9 +130,11 @@ cd ~/qu-ai-wei && git pull
 bash scripts/install-skill.sh --platform all --mode copy --force
 ```
 
-也可以在任一已安装目录直接跑：
+也可以在任一已安装目录直接跑（示例）：
 
 ```bash
+bash ~/.claude/skills/qu-ai-wei/update.sh
+# 或
 bash ~/.codex/skills/qu-ai-wei/update.sh
 ```
 
@@ -254,7 +244,7 @@ SKILL.md 里有完整的规则激活矩阵。判不清的时候 qu-ai-wei 会问
 
 ### 中英混排：只保留专有名词，不管空格
 
-**唯一的硬性规则：** 英文专有名词、产品名、人名、缩写，改写时**原样保留**,不翻译、不意译、不替换。"Claude Code" 不能改成"克劳德代码","Transformer" 不能改成"变换器"。这是"信息完整性"的延伸。
+**唯一的硬性规则：** 英文专有名词、产品名、人名、缩写，改写时**原样保留**,不翻译、不意译、不替换。"Codex CLI" 不能改成"科德克斯命令行","Transformer" 不能改成"变换器"。这是"信息完整性"的延伸。
 
 **中英、中数之间的半角空格（俗称"盘古之白"），本 skill 不管。** 这东西 AI 和人都在各自变，加或不加根本分不出来，不能作为去 AI 腔的信号。也不是国标 — GB/T 15834-2011 只管标点，W3C CLREQ 说"字距或空白"均可不强制 U+0020，sparanoid 盘古之白原作者自己都说它是 "informal typographic convention"。真要替用户加反而踩坑：人家原文本来不加空格（朋友圈、公众号、小红书都这样），qu-ai-wei 给加上，一股"技术圈腔"就冒出来了。
 
