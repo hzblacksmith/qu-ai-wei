@@ -23,7 +23,7 @@ description: |
   v0.6.3 做一致性校准:统一规则计数、补清晰执行分支、修正全角标点对照示例,减少误触发。
   注:首次公开版本只支持简体中文。繁體(台 / 港用字)规则单独维护,暂未纳入。
 license: MIT
-compatibility: claude-code opencode cursor windsurf
+compatibility: cursor claude-code codex opencode kiro factory slate hermes
 allowed-tools:
   - Read
   - Write

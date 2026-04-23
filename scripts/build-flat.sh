@@ -24,6 +24,19 @@ for f in "$SKILL" "$PATTERNS" "$BRAND" "$MODELS" "$EXAMPLES" "$SOURCES"; do
   [ -f "$f" ] || { echo "错误:找不到 $f"; exit 1; }
 done
 
+# 从 SKILL.md frontmatter 读取版本号，避免 .cursorrules / WARP.md 顶部版本提示漂移
+SKILL_VERSION="$(
+  awk '
+    BEGIN { in_fm=0 }
+    /^---$/ {
+      if (in_fm==0) { in_fm=1; next }
+      if (in_fm==1) { exit }
+    }
+    in_fm==1 && $1=="version:" { print $2; exit }
+  ' "$SKILL"
+)"
+[ -n "$SKILL_VERSION" ] || SKILL_VERSION="0.x"
+
 # 从 references/*.md 去掉顶部"本文件是..." 的 preamble + YAML-like 元注释(保留从第一个 ## 开始的内容)
 strip_preamble() {
   awk 'BEGIN{skip=1} /^## /{skip=0} skip==0{print}' "$1"
@@ -92,7 +105,7 @@ awk '
   echo ">"
   echo "> 之后用户说「帮我去 AI 味 / 改得说人话 / 写得更通俗 / humanize 这段中文」等,模型就会按本规则清理中文 AI 腔。"
   echo ">"
-  echo "> ⚠️ **版本 0.6.2 开发版,只支持简体中文。** 繁體版本留给后续迭代。"
+  echo "> ⚠️ **版本 ${SKILL_VERSION} 开发版,只支持简体中文。** 繁體版本留给后续迭代。"
   echo ""
   echo ""
   cat "$DIR/WARP.md.tmp"
@@ -108,7 +121,7 @@ awk '
   echo ">"
   echo "> 之后用户说「帮我去 AI 味 / 改得说人话」等,模型就会按本规则清理中文 AI 腔。"
   echo ">"
-  echo "> ⚠️ **版本 0.6.2 开发版,只支持简体中文。**"
+  echo "> ⚠️ **版本 ${SKILL_VERSION} 开发版,只支持简体中文。**"
   echo ""
   echo ""
   cat "$DIR/WARP.md.tmp"

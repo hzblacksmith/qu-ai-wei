@@ -12,7 +12,7 @@ DRY_RUN=0
 PLATFORM_ARGS=()
 CUSTOM_ROOTS=()
 
-ALL_PLATFORMS=(codex cursor factory slate kiro hermes)
+ALL_PLATFORMS=(cursor claude codex opencode kiro factory slate hermes)
 
 usage() {
   cat <<'EOF'
@@ -21,7 +21,7 @@ install-skill.sh [options]
 Install this skill to platform-native skills directories.
 
 At least one of:
-  --platform <name>    codex | cursor | factory | slate | kiro | hermes | all
+  --platform <name>    cursor | claude | codex | opencode | kiro | factory | slate | hermes | all
                        Can be repeated or comma-separated.
   --to <skills-dir>    Custom skills root directory. Can be repeated.
 
@@ -33,9 +33,9 @@ Optional:
   -h, --help           Show this help
 
 Examples:
-  bash scripts/install-skill.sh --platform codex
+  bash scripts/install-skill.sh --platform cursor
   bash scripts/install-skill.sh --platform cursor --platform slate
-  bash scripts/install-skill.sh --platform codex,cursor,factory --name qu-ai-wei
+  bash scripts/install-skill.sh --platform cursor,claude,codex --name qu-ai-wei
   bash scripts/install-skill.sh --platform all --force
   bash scripts/install-skill.sh --to ~/.my-agent/skills --name qu-ai-wei
 EOF
@@ -60,6 +60,8 @@ has_item() {
 platform_root() {
   case "$1" in
     codex)   printf '%s/.codex/skills' "$HOME" ;;
+    claude)  printf '%s/.claude/skills' "$HOME" ;;
+    opencode) printf '%s/.config/opencode/skills' "$HOME" ;;
     cursor)  printf '%s/.cursor/skills' "$HOME" ;;
     factory) printf '%s/.factory/skills' "$HOME" ;;
     slate)   printf '%s/.slate/skills' "$HOME" ;;
@@ -164,7 +166,7 @@ if [ "${#PLATFORM_ARGS[@]}" -gt 0 ]; then
       fi
       if ! platform_root "$norm" >/dev/null 2>&1; then
         echo "错误: 不支持的平台 '$norm'" >&2
-        echo "支持: codex, cursor, factory, slate, kiro, hermes, all" >&2
+        echo "支持: cursor, claude, codex, opencode, kiro, factory, slate, hermes, all" >&2
         exit 1
       fi
       add_target_root "$(platform_root "$norm")" "$norm"
