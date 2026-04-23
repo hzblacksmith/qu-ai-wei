@@ -61,51 +61,69 @@ v0.6.0 起,这个 skill 同时扮演两个角色:
 
 ## 安装
 
-### Claude Code
+### 一键安装到 skills 目录（推荐）
 
 ```bash
-# 方法一:git clone(推荐)
-git clone https://github.com/hzblacksmith/qu-ai-wei.git ~/.claude/skills/qu-ai-wei
+git clone https://github.com/hzblacksmith/qu-ai-wei.git ~/qu-ai-wei
+cd ~/qu-ai-wei
 
-# 方法二:手动下载
-# 从 GitHub 下载 zip,解压到 ~/.claude/skills/qu-ai-wei/
+# 按平台安装（可重复执行）
+bash scripts/install-skill.sh --platform codex
+bash scripts/install-skill.sh --platform cursor
+bash scripts/install-skill.sh --platform factory
+bash scripts/install-skill.sh --platform slate
+bash scripts/install-skill.sh --platform kiro
+bash scripts/install-skill.sh --platform hermes
+
+# 一次装全
+bash scripts/install-skill.sh --platform all
 ```
 
-### OpenCode
+默认会安装到 `<skills-root>/qu-ai-wei`（不是固定某个词前缀）。对应平台目录：
 
-OpenCode 也会扫描 `~/.claude/skills/`,所以 Claude Code 的安装会自动被识别。或者单独放在 `~/.config/opencode/skills/qu-ai-wei/`。
+| 平台 | 参数 | 目标目录 |
+|---|---|---|
+| OpenAI Codex CLI | `--platform codex` | `~/.codex/skills/qu-ai-wei` |
+| Cursor | `--platform cursor` | `~/.cursor/skills/qu-ai-wei` |
+| Factory Droid | `--platform factory` | `~/.factory/skills/qu-ai-wei` |
+| Slate | `--platform slate` | `~/.slate/skills/qu-ai-wei` |
+| Kiro | `--platform kiro` | `~/.kiro/skills/qu-ai-wei` |
+| Hermes | `--platform hermes` | `~/.hermes/skills/qu-ai-wei` |
 
-### Cursor / Windsurf
+可选参数：
 
-把 `.cursorrules` 复制到项目根目录：
+- `--name <dir>`：自定义安装目录名（默认 `qu-ai-wei`）
+- `--mode copy`：复制而非软链接（默认 `symlink`）
+- `--to <skills-root>`：安装到任意自定义技能目录（可重复）
+- `--host`：`--platform` 的别名（兼容旧习惯）
+
+例如：
 
 ```bash
-# 先 clone(如已装 Claude Code 可跳过)
-git clone https://github.com/hzblacksmith/qu-ai-wei.git ~/qu-ai-wei
+# 自定义目录名
+bash scripts/install-skill.sh --platform codex --name qu-ai-wei-cn
 
-# 复制到项目根
+# 自定义平台目录
+bash scripts/install-skill.sh --to ~/.my-agent/skills --name qu-ai-wei
+```
+
+### Claude Code / OpenCode（兼容原方式）
+
+也可以直接放在 `~/.claude/skills/qu-ai-wei/`（OpenCode 会扫描这个目录）。
+
+### Cursor / Windsurf / Warp（文件级兼容方式）
+
+如果你的环境更偏好项目级规则文件，继续使用下面方式：
+
+```bash
+# Cursor / Windsurf
 cp ~/qu-ai-wei/.cursorrules /path/to/your-project/.cursorrules
-# Windsurf:同时复制一份为 .windsurfrules
 cp ~/qu-ai-wei/.cursorrules /path/to/your-project/.windsurfrules
-```
 
-之后在 Cursor / Windsurf 里说「帮我去 AI 味」「改得说人话」即可自动触发。
-
-### Warp
-
-把 `WARP.md` 放到项目根目录，或 `~/.warp/WARP.md` 全局生效：
-
-```bash
-# 先 clone(如已装 Claude Code 可跳过)
-git clone https://github.com/hzblacksmith/qu-ai-wei.git ~/qu-ai-wei
-
-# 项目级
+# Warp
 cp ~/qu-ai-wei/WARP.md /path/to/your-project/WARP.md
-# 或全局
 cp ~/qu-ai-wei/WARP.md ~/.warp/WARP.md
 ```
-
-之后在 Warp 里说「帮我去 AI 味」「改得说人话」即可自动触发。
 
 ### 其他支持自定义指令的模型（ChatGPT / DeepSeek / Kimi / 通义 等）
 
@@ -116,16 +134,18 @@ cp ~/qu-ai-wei/WARP.md ~/.warp/WARP.md
 装好后想拿到最新规则：
 
 ```bash
-# Claude Code / OpenCode:一行搞定
-bash ~/.claude/skills/qu-ai-wei/update.sh
-
-# 等价的手工做法
-cd ~/.claude/skills/qu-ai-wei && git pull
-
-# Cursor / Windsurf / Warp:在 clone 出来的那份上 pull,再覆盖回项目
+# 更新 repo（推荐）
 cd ~/qu-ai-wei && git pull
-cp ~/qu-ai-wei/.cursorrules /path/to/your-project/.cursorrules
-cp ~/qu-ai-wei/WARP.md      /path/to/your-project/WARP.md
+
+# 如果你用的是 symlink 模式（默认），到这里就完成了
+# 如果你用的是 copy 模式，重新安装一次覆盖
+bash scripts/install-skill.sh --platform all --mode copy --force
+```
+
+也可以在任一已安装目录直接跑：
+
+```bash
+bash ~/.codex/skills/qu-ai-wei/update.sh
 ```
 
 `update.sh` 会打印 `旧版本 → 新版本` 和本版发布页链接,没有新版就提示「已是最新」。每版具体变化见 [Releases](https://github.com/hzblacksmith/qu-ai-wei/releases)。
