@@ -1,6 +1,6 @@
 ---
 name: qu-ai-wei
-version: 0.6.4
+version: 0.6.5
 description: |
   去除简体中文文本中的 AI 写作痕迹,并在不虚构的前提下主动做 craft 打磨,让终稿
   "干净且精准",而不是仅仅"不像 AI"。当用户说「去 AI 味 / 去ai味 / 帮我去 AI 味 /
